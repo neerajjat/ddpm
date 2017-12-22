@@ -23,26 +23,38 @@
 </ul>
 <body>
 <script>
-$(function(){
-    $("#slider-range-max").slider({
-    range: "max",
-    min: 1,
-    max: 10,
-    value: 5,
-    slide: function(event, ui){
-        $("#amount").val(ui.value);
+$(document).ready(function(){
+    objects = ['bug_score', 'test_score']
+    for (obj in objects) {
+        obj_id = '#' + objects[obj]
+        obj_input = obj_id + '_' + 'slider'
+        slider_id = obj_id + '_' + 'slider'
+        console.log('obj_id:' + obj_id + ':' + 'obj_input:' + obj_input)
+        $(obj_input).slider({
+        range: "max",
+        min: 1,
+        max: 10,
+        value: 5,
+        slide: function(event, ui){
+            $(obj_id).val(ui.value);
+        }
+        });
+        $(obj_id).val( $(obj_input).slider( "value" ) );
     }
-    });
-    $( "#amount" ).val( $( "#slider-range-max" ).slider( "value" ) );
 
 });
 </script>
 <br><br>
 <p>
-    <label for="amount">Bug Score:</label>
-    <input type="text" id="amount" readonly style="border:0; color:#f6931f; font-weight:bold;">
+    <label for="bug_score">Bug Score:</label>
+    <input type="text" id="bug_score" readonly style="border:0; color:#f6931f; font-weight:bold;">
+    <div id="bug_score_slider" style="width:50%"></div>
 </p>
-<div id="slider-range-max" style="width:50%"></div>
+<p>
+    <label for="test_score">Test Score:</label>
+    <input type="text" id="test_score" readonly style="border:0; color:#f6931f; font-weight:bold;">
+<div id="test_score_slider" style="width:50%"></div>
+</p>
 </body>
 </html>
 
