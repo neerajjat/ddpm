@@ -1,10 +1,12 @@
-<!-- Latest compiled and minified CSS -->
+<!-- Jquery UI for slider control. JqueryUI needs JQuery -->
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<link rel="stylesheet" href="https://jqueryui.com/jquery-wp-content/themes/jqueryui.com/style.css">
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+<!-- Bootstrap -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-
-<!-- Optional theme -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
-
-<!-- Latest compiled and minified JavaScript -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
 <html>
@@ -19,5 +21,28 @@
     <li><a href="#" data-toggle="pill" class="not-active">Test Executions</a></li>
     <li><a href="#" data-toggle="pill" class="not-active">Code Commits</a></li>
 </ul>
+<body>
+<script>
+$(function(){
+    $("#slider-range-max").slider({
+    range: "max",
+    min: 1,
+    max: 10,
+    value: 5,
+    slide: function(event, ui){
+        $("#amount").val(ui.value);
+    }
+    });
+    $( "#amount" ).val( $( "#slider-range-max" ).slider( "value" ) );
+
+});
+</script>
+<br><br>
+<p>
+    <label for="amount">Bug Score:</label>
+    <input type="text" id="amount" readonly style="border:0; color:#f6931f; font-weight:bold;">
+</p>
+<div id="slider-range-max" style="width:50%"></div>
+</body>
 </html>
 
