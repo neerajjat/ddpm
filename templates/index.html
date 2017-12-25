@@ -22,26 +22,37 @@
     <li><a href="#" data-toggle="pill" class="not-active">Code Commits</a></li>
 </ul>
 <body>
-<script src="static/functions.js"></script>
 <script>
-$(document).ready(function(){
-    objects = ['bug_score', 'test_score']
-    for (obj in objects){
-        load_slider(objects, obj);
+    function changeElementValue(id, value){
+        document.getElementById(id).innerHTML = value
+        console.log('element id:' + id + ' and value:' + value)
     }
-});
+
+    function computeOverallScore(id, value){
+        changeElementValue(id, value)
+        overallScore = parseInt(document.getElementById("test-score-value").innerHTML) *
+            parseInt(document.getElementById("test-weight-value").innerHTML) +
+            parseInt(document.getElementById("bug-score-value").innerHTML) *
+            parseInt(document.getElementById("bug-weight-value").innerHTML);
+        console.log('Overall value:' + overallScore)
+        console.log('bug weight value:' + document.getElementById('bug-weight-value').value)
+        document.getElementById('overall-value').innerHTML = overallScore
+    }
 </script>
-<br><br>
-<p>
-    <label for="bug_score">Bug Score:</label>
-    <input type="text" id="bug_score" readonly style="border:0; color:#f6931f; font-weight:bold;">
-    <div id="bug_score_slider" style="width:30%"></div>
-</p>
-<p>
-    <label for="test_score">Test Score:</label>
-    <input type="text" id="test_score" readonly style="border:0; color:#f6931f; font-weight:bold;">
-<div id="test_score_slider" style="width:30%"></div>
-</p>
+
+<br><br>Weights
+<input id="bug-weight" type="range" min="1" max="10" step="1" value="3" style="width:30%" onchange="computeOverallScore('bug-weight-value', this.value)">
+Bugs = <span id="bug-weight-value">3</span>
+<input id="test-weight" type="range" min="1" max="10" step="1" value="3" style="width:30%" onchange="computeOverallScore('test-weight-value', this.value)">
+Test = <span id="test-weight-value">3</span>
+
+<br><br>Scores
+<br>Test = <span id="test-score-value">5</span>
+<br>Bugs = <span id="bug-score-value">9</span>
+
+<br><br>Overall Scores
+<br>Overall = <span id="overall-value">?</span>
+
 </body>
 </html>
 
