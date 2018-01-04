@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 from flask_pymongo import PyMongo
 
 app = Flask(__name__)
@@ -15,6 +15,13 @@ def hello():
 def testmongo():
     mongo.db.employees.insert({'abcd':'abcd'})
     return "Inserted"
+
+@app.route("/save_template", methods=['POST'])
+def save_template():
+    data = request.get_json()
+    status = mongo.db.employees.insert(data)
+    print 'Inserted template with data:%s with status:%s' % (data, status)
+    return str(data)
 
 if __name__ == "__main__":
     app.run()
