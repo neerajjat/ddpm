@@ -1,6 +1,8 @@
 from flask import Flask, render_template, request
 from flask_pymongo import PyMongo
 
+attributes = ["code","bug","test", "review"]
+
 app = Flask(__name__)
 
 app.config['MONGO_URI'] = 'mongodb://admin:password@ds157653.mlab.com:57653/ddpm'
@@ -9,7 +11,7 @@ mongo = PyMongo(app)
 
 @app.route("/")
 def hello():
-    return render_template('index.html')
+    return render_template('index.html', attributes=attributes)
 
 @app.route("/testmongo")
 def testmongo():
@@ -19,7 +21,7 @@ def testmongo():
 @app.route("/save_template", methods=['POST'])
 def save_template():
     data = request.get_json()
-    status = mongo.db.employees.insert(data)
+    status = mongo.db.templates.insert(data)
     print 'Inserted template with data:%s with status:%s' % (data, status)
     return str(data)
 

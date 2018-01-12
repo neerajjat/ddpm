@@ -27,26 +27,19 @@ $(document).ready(function(){
         console.log('element id:' + id + ' and value:' + value)
     }
 
-    function computeOverallScore(id, value){
-        changeElementValue(id, value)
-        overallScore = parseInt(document.getElementById("test-score-value").innerHTML) *
-            parseInt(document.getElementById("test-weight-value").innerHTML) +
-            parseInt(document.getElementById("bug-score-value").innerHTML) *
-            parseInt(document.getElementById("bug-weight-value").innerHTML);
-        console.log('Overall value:' + overallScore)
-        console.log('bug weight value:' + document.getElementById('bug-weight-value').value)
-        document.getElementById('overall-value').innerHTML = overallScore
-    }
-
     function createTemplate(){
-        var template1 = {"bug_weight":   document.getElementById("bug-weight-value").innerHTML,
-                    "test_weight":  document.getElementById("test-weight-value").innerHTML
-                    };
-        console.log('Template:' + JSON.stringify(template1));
+        var score = {}
+        var attributes = {{attributes|safe}}
+        console.log('attributes as attributes:' + attributes)
+        for (item in attributes){
+            console.log('Item:' + attributes[item])
+            score[attributes[item]] = parseInt(document.getElementById(attributes[item]).innerHTML)
+        }
+        console.log('Template:' + JSON.stringify(score));
         $.ajax({url:"/save_template",
             type: 'POST',
             contentType: "application/json; charset=utf-8",
-            data: JSON.stringify(template1),
+            data: JSON.stringify(score),
             success: function(response){
                 console.log(response)
                 displayTemplateSavedMsg(response)
@@ -67,19 +60,16 @@ $(document).ready(function(){
         $("#template_save_msg").show()
     }
 </script>
+<br>
+<div style="font-weight: bold;">Weights</div>
+<br>
+{% for attribute in attributes %}
+    {% set weight_attribute = attribute + '-' + 'weight' %}
+    <input id="{{ weight_attribute }}" type="range" min="1" max="10" step="1" value="3" style="width:30%" onchange="changeElementValue('{{ attribute }}', this.value)">
+    {{ attribute }} = <span id="{{ attribute }}">3</span>
+{% endfor %}
 
-<br><br>Weights
-<input id="bug-weight" type="range" min="1" max="10" step="1" value="3" style="width:30%" onchange="computeOverallScore('bug-weight-value', this.value)">
-Bugs = <span id="bug-weight-value">3</span>
-<input id="test-weight" type="range" min="1" max="10" step="1" value="3" style="width:30%" onchange="computeOverallScore('test-weight-value', this.value)">
-Test = <span id="test-weight-value">3</span>
-
-<br><br>Scores
-<br>Test = <span id="test-score-value">5</span>
-<br>Bugs = <span id="bug-score-value">9</span>
-
-<br><br>Overall Scores
-<br>Overall = <span id="overall-value">?</span><br><br>
+<br><br>
 <input type="submit" class="btn btn-default" onclick="createTemplate()">
 <p id="template_save_msg" class="text-danger"></p>
 
