@@ -1,5 +1,7 @@
 from flask import Flask, render_template, request
 from flask_pymongo import PyMongo
+import pickle
+import hashlib
 
 attributes = ["code","bug","test", "review"]
 
@@ -21,6 +23,8 @@ def testmongo():
 @app.route("/save_template", methods=['POST'])
 def save_template():
     data = request.get_json()
+    checksum = hashlib.md5(pickle.dumps(data)).hexdigest()
+    data.update({'checksum':checksum})
     status = mongo.db.templates.insert(data)
     print 'Inserted template with data:%s with status:%s' % (data, status)
     return str(data)
