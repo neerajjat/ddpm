@@ -4,38 +4,44 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 <script src="static/hello.js"></script>
-
-<html>
-<head>
-    <title>DDPM Dashboard</title>
-</head>
-<ul class="nav nav-pills">
-    <li><a data-toggle="pill" href="#"><span class="glyphicon glyphicon-home"></span>  Home</a></li>
-    <li class="active"><a data-toggle="pill" href="#home">DDPM Dashboard</a></li>
-    <li><a href="#" data-toggle="pill">Bugs</a></li>
-    <li><a href="#" data-toggle="pill" class="not-active">Code Reviews</a></li>
-    <li><a href="#" data-toggle="pill" class="not-active">Test Executions</a></li>
-    <li><a href="#" data-toggle="pill" class="not-active">Code Commits</a></li>
-</ul>
-<body>
 <script>
 $(document).ready(function(){
     $("#template_save_msg").hide();
 });
 </script>
-<br>
-<div style="font-weight: bold;">Weights</div>
-<br>
-{% for attribute in attributes %}
-    {% set weight_attribute = attribute + '-' + 'weight' %}
-    <input id="{{ weight_attribute }}" type="range" min="1" max="10" step="1" value="3" style="width:30%" onchange="changeElementValue('{{ attribute }}', this.value)">
-    {{ attribute }} = <span id="{{ attribute }}">3</span>
-{% endfor %}
 
-<br><br>
-<input type="submit" class="btn btn-default" onclick="createTemplate({{attributes}})">
-<p id="template_save_msg" class="text-danger"></p>
+<html>
+<head>
+    <title>DDPM Dashboard</title>
+</head>
+<body>
+<ul class="nav nav-pills">
+    <li class="active"><a data-toggle="pill" href="#"><span class="glyphicon glyphicon-home"></span>  Home</a></li>
+    <li><a data-toggle="pill" href="#home">DDPM Dashboard</a></li>
+    <li><a href="#bugs" data-toggle="pill" class="not-acive">Bugs</a></li>
+    <li><a href="#code_reviews" data-toggle="pill" class="not-active">Code Reviews</a></li>
+    <li><a href="#test_executions" data-toggle="pill" class="not-active">Test Executions</a></li>
+    <li><a href="#code_commits" data-toggle="pill" class="not-active">Code Commits</a></li>
+</ul>
 
+<div class="tab-content">
+    <div id="bugs" class="tab-pane collapse fade">Bugs</div>
+    <div id="home" class="tab-pane collapse fade">
+        <div style="font-weight: bold;">Weights</div>
+        <br>
+        {% for attribute in attributes %}
+        {% set weight_attribute = attribute + '-' + 'weight' %}
+        <input id="{{ weight_attribute }}" type="range" min="1" max="10" step="1" value="3" style="width:30%" onchange="changeElementValue('{{ attribute }}', this.value)">
+        {{ attribute }} = <span id="{{ attribute }}">3</span>
+        {% endfor %}
+        <br><br>
+        <input type="submit" class="btn btn-default" onclick="createTemplate({{attributes}})">
+        <p id="template_save_msg" class="text-danger"></p>
+    </div>
+    <div id="code_reviews" class="tab-pane collapse fade">Code Reviews</div>
+    <div id="test_executions" class="tab-pane collapse fade">Test Executions</div>
+    <div id="code_commits" class="tab-pane collapse fade">Code Commits</div>
+</div>
 </body>
 </html>
 
