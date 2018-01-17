@@ -29,5 +29,14 @@ def save_template():
     print 'Inserted template with data:%s with status:%s' % (data, status)
     return str(data)
 
+@app.route("/get_templates", methods=['GET'])
+def get_templates():
+    data = mongo.db.templates.find()
+    result = []
+    for item in data:
+        result.append(item)
+    print 'Result:', result
+    return str(result)
+
 if __name__ == "__main__":
     app.run()

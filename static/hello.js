@@ -33,3 +33,19 @@
         $("#template_save_msg").html(message)
         $("#template_save_msg").show()
     }
+
+    function showTemplates(){
+        console.log('Getting Templates');
+        $.ajax({
+            url: '/get_templates',
+            type: 'GET',
+            contentType: "application/json; charset=utf-8",
+            success: function(response){
+                console.log('Templates:' + response)
+                document.getElementById("myTemplates").innerHTML = response
+                },
+            error: function(error){
+                console.log('Error message:' + error)
+                }
+        });
+    }
