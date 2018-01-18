@@ -17,11 +17,11 @@ $(document).ready(function(){
 <body>
 <ul class="nav nav-pills">
     <li class="active"><a data-toggle="pill" href="#home"><span class="glyphicon glyphicon-home"></span>  Home</a></li>
-    <li><a href="#templates" data-toggle="pill" class="not-acive">Templates</a></li>
-    <li><a href="#bugs" data-toggle="pill" class="not-acive">Bugs</a></li>
-    <li><a href="#code_reviews" data-toggle="pill" class="not-active">Code Reviews</a></li>
-    <li><a href="#test_executions" data-toggle="pill" class="not-active">Test Executions</a></li>
-    <li><a href="#code_commits" data-toggle="pill" class="not-active">Code Commits</a></li>
+    <li><a href="#templates" data-toggle="pill">Templates</a></li>
+    <li><a href="#bugs" data-toggle="pill">Bugs</a></li>
+    <li><a href="#code_reviews" data-toggle="pill">Code Reviews</a></li>
+    <li><a href="#test_executions" data-toggle="pill">Test Executions</a></li>
+    <li><a href="#code_commits" data-toggle="pill">Code Commits</a></li>
 </ul>
 <br>
 
@@ -32,6 +32,24 @@ $(document).ready(function(){
                 <li class="active"><a href="#create-template" data-toggle="pill">Create Template</a></li>
                 <li><a href="#show-templates" data-toggle="pill" onclick="showTemplates()">Show Templates</a></li>
             </ul>
+            <!-- Second level tab content -->
+            <div class="tab-content">
+                <div id="create-template" class="tab-pane collapse fade">Create template
+                    <div style="font-weight: bold;">Weights</div>
+                    <br>
+                    {% for attribute in attributes %}
+                    {% set weight_attribute = attribute + '-' + 'weight' %}
+                    <input id="{{ weight_attribute }}" type="range" min="1" max="10" step="1" value="3" style="width:30%" onchange="changeElementValue('{{ attribute }}', this.value)">
+                    {{ attribute }} = <span id="{{ attribute }}">3</span>
+                    {% endfor %}
+                    <br><br>
+                    <input type="submit" class="btn btn-default" onclick="createTemplate({{attributes}})">
+                    <p id="template_save_msg" class="text-danger"></p>
+                </div>
+                <div id="show-templates" class="tab-pane collapse fade">Show Templates
+                    <table class="table table-striped" id="templates-list"></table>
+                </div>
+            </div>
         </div>
     </div>
     <div id="home" class="tab-pane collapse fade">Home</div>
@@ -41,24 +59,6 @@ $(document).ready(function(){
     <div id="code_commits" class="tab-pane collapse fade">Code Commits</div>
 </div>
 
-<!-- Second level tab content -->
-<div class="tab-content">
-    <div id="create-template" class="tab-pane collapse fade">Create template
-        <div style="font-weight: bold;">Weights</div>
-        <br>
-        {% for attribute in attributes %}
-        {% set weight_attribute = attribute + '-' + 'weight' %}
-        <input id="{{ weight_attribute }}" type="range" min="1" max="10" step="1" value="3" style="width:30%" onchange="changeElementValue('{{ attribute }}', this.value)">
-        {{ attribute }} = <span id="{{ attribute }}">3</span>
-        {% endfor %}
-        <br><br>
-        <input type="submit" class="btn btn-default" onclick="createTemplate({{attributes}})">
-        <p id="template_save_msg" class="text-danger"></p>
-    </div>
-    <div id="show-templates" class="tab-pane collapse fade">
-        <p id="myTemplates"></p>
-    </div>
-</div>
 </body>
 </html>
 

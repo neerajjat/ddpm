@@ -41,8 +41,7 @@
             type: 'GET',
             contentType: "application/json; charset=utf-8",
             success: function(response){
-                console.log('Templates:' + response)
-                document.getElementById("myTemplates").innerHTML = response
+                document.getElementById("templates-list").innerHTML = response
                 },
             error: function(error){
                 console.log('Error message:' + error)

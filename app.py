@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, jsonify
 from flask_pymongo import PyMongo
 import pickle
 import hashlib
@@ -32,11 +32,12 @@ def save_template():
 @app.route("/get_templates", methods=['GET'])
 def get_templates():
     data = mongo.db.templates.find()
-    result = []
+    print 'Data type:', type(data)
+    result = ''
     for item in data:
-        result.append(item)
+        result = result + '<tr><td>' + str(item) + '</td></tr>'
     print 'Result:', result
-    return str(result)
+    return result
 
 if __name__ == "__main__":
     app.run()
